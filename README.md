@@ -10,7 +10,9 @@
 [image5]: ./figures/validation_set_sampl.png "Validation set 3 random samples"
 [image6]: ./figures/test_set_sampl.png "Test set 3 random samples"
 [image7]: ./figures/input_preprocessing.png "Preprocessing pipeline of the data set"
-[image8]: ./figures/placeholder.png "Traffic Sign 5"
+[image8]: ./figures/new_orig_imgs.png "New images of German traffic signs tested"
+[image9]: ./figures/new_orig_preproc_imgs.png "New images of German traffic signs preprocessed before test"
+[image10]: ./figures/prediction_probabilities.png "Probabilities of each new image obtained during the classification process"
 
 Overview
 ---
@@ -190,9 +192,37 @@ To train my model we used softmax corss entropy with one-hot encoded labels. Mor
 * training epochs = 32
 * learning rate = 0.001
 
-#### 4. Describe the approach taken for finding a solution and getting the validation set accuracy to be at least 0.93. Include in the discussion the results on the training, validation and test sets and where in the code these were calculated. Your approach may have been an iterative process, in which case, outline the steps you took to get to the final solution and why you chose those steps. Perhaps your solution involved an already well known implementation or architecture. In this case, discuss why you think the architecture is suitable for the current problem.
+#### 4. Finding a solution
+
+During the 32 epochs we observed that training and validation losses converged steadily and constantly to the minimum global. At the same time, training and validation accuracies where increasing. We noticed that the best validation loss was achieved during epoch 28 where the training accuracy was 0.998 (almost 1.0), validation accuracy was 0.986, validation loss was 0.134 and finally training loss 0.007. With this model we achieved a 0.953 accuracy value using the test set. 
+
+In order to get to this solution we test with different models varying the number of layers, convolution kernels, max pooling, strides, dropout values and also number of neurons in the fully connected layers. Moreover, we tested different learning rates. 
+
+Our model is overfitting over the training set, nevertheless the validation loss is mantained higher than the training one. The final test would be using new input data from internet. There we will see if our model generalize well using new input data. 
+
+The first architecture we used was the LeNet-5 architecture. With this approach we obtained lower validation accuracies and model get stucked after only a few epochs. Due to, we increased the complexity of our architecture to obtain better results. This process was totally based on an exhaustive experimentation. With these changes we avoid underfitting due to the low model complexity, and we avoided overfitting due to the lack of data (by using dropout). We also improved the results increasing the batch size to 256. Training process was quite faster and results were better. 
 
 My final model results were:
-* training set accuracy of ?
-* validation set accuracy of ? 
-* test set accuracy of ?
+* training set accuracy of 0.998
+* validation set accuracy of 0.969
+* test set accuracy of 0.953
+
+### Test a Model on New Images
+
+In this section we will choose five German traffic signs founded on the web in order to test our model with new input data. By this way, we will know if our model generalize well over new input data. For each image, we will discuss what quality or qualities might be difficult to classify.
+
+Here are the German traffic signs that I found on the web:
+
+![New input images][image8] 
+
+The same images after the preprocessing stage:
+
+![New input images preprocessed][image9]
+
+An finally the obtained probabilities:
+
+![Probabilities of the classification of new images][image10]
+
+As we observed, the model was able to classify correctly 8 images of 11 which is a quite good result. The misclassified images are because of the lack of data. We noticed that the presence of a different sight angle in the image will conduct to a misclassification.
+
+Looking at the probabilities we are able to see what classes the model is wrong with.
